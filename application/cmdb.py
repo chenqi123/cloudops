@@ -13,7 +13,7 @@ vhost and bussiness information for easy use.
 import os
 os.environ['PYTHON_EGG_CACHE'] = '/tmp'
 os.environ['NLS_LANG'] = 'AMERICAN_AMERICA.ZHS16GBK'
-import cx_Oracle
+#import cx_Oracle
 import mysql.connector
 from datetime import datetime,timedelta
 import pexpect
@@ -21,6 +21,7 @@ import logging
 
 today = (datetime.now().date()).strftime('%Y-%m-%d')
 
+'''
 def getdatafromcmdb():
     conn = cx_Oracle.connect('iaas/iaas_123@10.70.240.69/ULTRACMDB')
     cursor = conn.cursor ()
@@ -32,6 +33,7 @@ def getdatafromcmdb():
     cursor.close () 
     conn.close ()
     return data
+'''
 
 def putdatatodb(cmdb):
     try:

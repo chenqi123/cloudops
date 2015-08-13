@@ -277,7 +277,7 @@ def addproject(request):
     
     return HttpResponse('Already added project information!')
 
-
+'''
 from cmdb import getdatafromcmdb,putdatatodb
 def addprojectauto(request):
     
@@ -306,6 +306,7 @@ def addprojectauto(request):
             #ssh2(host_ip,create_deploy_user)
     
     return HttpResponse(u'数据获取成功！')
+'''
 
 from django.db import connection
 def dictfetchall(cursor):
@@ -323,7 +324,8 @@ def upload_package_index(request):
     #logging.info(user.name)
     cursor = connection.cursor()
 
-    if(user.is_superuser()==1):
+    #if(user.is_superuser()==1):
+    if user.is_superuser is True:
         order_no = vhost.objects.all().filter(status='hosted').distinct().values('order_no','order_name').order_by('-create_date');    
     else:
         
@@ -593,8 +595,9 @@ def project_instance_ops(request):
 
                 
         return HttpResponse('message')
-    
+
 from django.contrib import auth
+'''
 def login(request):
     username = request.POST.get('username','')
     password = request.POST.get('password','')
@@ -615,6 +618,30 @@ def login(request):
     else:
         request.session.clear()
         return render(request,'login.html')
+'''
+#modify by cq
+import pyotp
+def login(request):
+    username = request.POST.get('username','')
+    password = request.POST.get('password','')
+    token = request.POST.get('token','')
+    user = auth.authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            auth.login(request, user)
+            totp = pyotp.TOTP('EZ53JVL2SFT2ZBFJ').now()
+            if (token==unicode(totp)):
+                return HttpResponse('/application/')
+            else:
+                request.session.clear()
+                return render(request,'login.html')
+        else:
+            request.session.clear()
+            return render(request,'login.html')
+    else:
+        request.session.clear()
+        return render(request,'login.html')
+
 
 def logout(request):
     auth.logout(request)

@@ -1,74 +1,91 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html>
 
 <head>
-
+    {% load staticfiles %}
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="DNT">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="renderer" content="webkit">
 
-    <title>DevOps</title>
-    {% load staticfiles %} 
-    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-        <script src="{% static 'js/jquery.min.js' %} "></script>
-        <script src="{% static 'bootstrap/js/bootstrap.min.js' %} "></script>
+    <title>登录</title>
+    <meta name="keywords" content="响应式后台">
+    <meta name="description" content="现代技术">
+
+
+    <link href="{% static 'all/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'all/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+
+    <link href="{% static 'all/css/animate.css' %}" rel="stylesheet">
+    <link href="{% static 'all/css/style.css' %}" rel="stylesheet">
+
+
 
 </head>
 
-<body>
+<body class="gray-bg">
 
-<div class="container" style="margin-top:8%">
-<div class="row">
-<div class="col-md-offset-3 col-md-6">
-<div class="panel panel-primary">
-  <div class="panel-heading">Welcom to DevOps platform!</div>
-  <div class="panel-body">
-    <form class="form-horizontal" role="form" action="/login/" method="post">{% csrf_token %}
-     <div class="form-group"> 
-     <lable for="username" class="col-md-3 control-label">用户名:</lable>
-     <div class="col-md-6">
-      <input id="username" type="text" class="form-control" value="">
-     </div>     
-     </div>
-     <div class="form-group">
-     <label for="password" class="col-md-3 control-label">密码:</label>
-     <div class="col-md-6">
-     <input type="password" id="password" class="form-control" value="">
-     </div>
-     </div>
-         <div class="form-group">
-            <div class="col-md-offset-3 col-md-2">
-              <button id="buttonsubmit" type="button" class="btn btn-default" >登录</button>
+    <div class="middle-box text-center loginscreen  animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">DNT</h1>
+
             </div>
-          </div>
-    </form>    
-  </div>
+            <h3>欢迎使用 DNT</h3>
 
-</div>
+            <form class="m-t" role="form" action="index.html">
+                <div class="form-group">
+                    <input id="username" type="email" class="form-control" placeholder="用户名" required="">
+                </div>
+                <div class="form-group">
+                    <input id="password" type="password" class="form-control" placeholder="密码" required="">
+                </div>
+                <div class="form-group">
+                    <input id="token" type="text" class="form-control" placeholder="令牌" required="">
+                </div>
 
-</div>
-</div>
-</div>
-<script>
+                <button  id="buttonsubmit" type="submit" class="btn btn-primary block full-width m-b">登 录</button>
 
-$("body").on('click','#buttonsubmit',function () {
+
+                <p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register.html">注册一个新账号</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <!-- Mainly scripts -->
+    <script src="{% static 'all/js/jquery-2.1.1.min.js' %}" ></script>
+    <script src="{% static 'all/js/bootstrap.min.js' %}"></script>
+
+    <script>
+    $("body").on('click','#buttonsubmit',function () {
         var username = $("input#username").val();
         var password = $("input#password").val();
+        var token = $("input#token").val();
          $.ajax({
-		    url: "/application/login/", 
+		    url: "/application/login/",
 		    data: {
 		        username : username,
-		        password : password
-		    }, 
-		    type: "POST",    
-		    
-		    success:function(url){alert(url);window.location.href =url;}
-		    });
-    });
+		        password : password,
+                token : token
+		    },
+		    type: "POST",
 
-</script>
+		    success:function(url)
+            {
+                console.log(url)
+                alert(url);
+                window.location.href =url;
+            }
+         });
+    });
+    </script>
+
+
 
 </body>
 
+</html>

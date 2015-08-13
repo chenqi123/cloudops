@@ -81,7 +81,7 @@ DATABASES = {
         'NAME': 'deploy',
         'USER': 'deploy',
         'PASSWORD': 'deploy',
-        'HOST': 'localhost',
+        'HOST': '20.26.17.237',
         'PORT': '3306'
     }
 }
@@ -106,6 +106,9 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
 import logging
 logging.basicConfig(
